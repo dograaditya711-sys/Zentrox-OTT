@@ -1,0 +1,16 @@
+{
+  "name": "Zentrox Streaming",
+  "short_name": "Zentrox",
+  "description": "Watch Movies and Series on Zentrox",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b0c10",
+  "theme_color": "#e50914",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/2504/2504814.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

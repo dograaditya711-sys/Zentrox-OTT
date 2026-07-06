@@ -1,0 +1,23 @@
+<a href="{% if is_tv %}{% url 'tv_detail' movie.id %}{% else %}{% url 'movie_detail' movie.id %}{% endif %}" class="relative group cursor-pointer block">
+    <div class="rounded-lg overflow-hidden shadow-lg transition transform duration-300 group-hover:scale-105 group-hover:ring-2 group-hover:ring-red-500">
+
+        {% if movie.poster_path %}
+            <img src="{{ image_base_url }}w500{{ movie.poster_path }}" alt="{{ movie.display_title }}" class="w-full aspect-[2/3] object-cover">
+        {% else %}
+            <div class="w-full aspect-[2/3] bg-gray-800 flex items-center justify-center">No Image</div>
+        {% endif %}
+
+        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition duration-300">
+            <div class="bg-red-600 rounded-full p-3">
+                <svg class="w-8 h-8 text-white pl-1" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"/></svg>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-2 text-center md:text-left">
+        <h3 class="font-bold text-sm md:text-base text-gray-100 truncate group-hover:text-red-500 transition">
+            {{ movie.display_title }}
+        </h3>
+        <span class="text-yellow-400 text-xs font-semibold">⭐ {{ movie.vote_average|floatformat:1 }}</span>
+    </div>
+</a>

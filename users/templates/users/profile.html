@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user.username }} - Zentrox.in Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0b0c10; color: white; }
+    </style>
+</head>
+<body class="antialiased overflow-x-hidden">
+
+    <nav class="w-full z-50 py-6 px-6 md:px-12 flex justify-center items-center bg-black/60 backdrop-blur-md border-b border-gray-800">
+    <a href="{% url 'home' %}" class="flex items-center space-x-1">
+        <h1 class="text-2xl md:text-4xl font-extrabold tracking-tighter shadow-sm">
+            <span class="text-red-600 italic">zentrox</span><span class="text-white">.in</span>
+        </h1>
+    </a>
+        <div class="flex items-center space-x-4">
+            <span class="text-xs font-bold text-gray-300">Hi, {{ user.username }}</span>
+            <form action="{% url 'logout' %}" method="POST" class="m-0 p-0">
+                {% csrf_token %}
+                <button type="submit" class="bg-gray-800 hover:bg-gray-700 text-white text-xs md:text-sm font-bold px-5 py-2 rounded-md transition transform hover:scale-105 shadow-lg">
+                    LOGOUT
+                </button>
+            </form>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-6 md:px-12 py-16">
+
+      <div class="text-center mb-16 p-10 bg-[#1f2128]/40 rounded-xl border border-dashed border-gray-800">
+    <div class="bg-red-600/10 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl shadow-red-600/5">
+        <span class="text-5xl font-black text-red-600 uppercase">{{ user.username|first }}</span>
+    </div>
+
+    <h2 class="text-3xl md:text-4xl font-black uppercase tracking-widest italic text-white drop-shadow-md">
+        Welcome back, <span class="text-red-500">{{ user.username }}</span>
+    </h2>
+
+    <p class="text-gray-500 mt-2">Member since {{ user.profile.added_on|date:"F Y" }}</p>
+
+</div>
+
+        <h2 class="text-2xl font-black uppercase tracking-widest italic border-l-4 border-red-600 pl-3 mb-10">
+            My Watchlist ({{ watchlist.count }})
+        </h2>
+
+        {% if watchlist %}
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-5 md:gap-8">
+            {% for item in watchlist %}
+            <div class="relative group cursor-pointer block">
+                <div class="rounded-lg overflow-hidden shadow-lg transition transform duration-300 group-hover:scale-105 group-hover:ring-2 group-hover:ring-red-500">
+                    <img src="{{ image_base_url }}w500{{ item.poster_path }}" alt="{{ item.title }}" class="w-full aspect-[2/3] object-cover">
+                </div>
+                <div class="mt-2 text-center md:text-left flex items-center justify-between">
+                    <h3 class="font-bold text-sm text-gray-100 truncate flex-grow">
+                        {{ item.title }}
+                    </h3>
+                    <form action="{% url 'remove_watchlist' %}" method="POST" class="ml-2 flex-none">
+                        {% csrf_token %}
+                        <input type="hidden" name="tmdb_id" value="{{ item.tmdb_id }}">
+                        <input type="hidden" name="media_type" value="{{ item.media_type }}">
+                        <button type="submit" class="text-xs text-gray-600 hover:text-red-500 font-bold transition">Remove</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-20 bg-[#1f2128]/20 rounded-xl border border-dashed border-gray-800">
+            <h3 class="text-2xl font-bold text-gray-500">Your Watchlist is empty</h3>
+            <p class="text-gray-600 mt-2">Explore the Homepage to add movies and series!</p>
+            <a href="{% url 'home' %}" class="inline-block mt-8 bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-md transition shadow-lg shadow-red-600/20">
+                Explore Home
+            </a>
+        </div>
+        {% endif %}
+
+    </div>
+
+</body>
+</html>

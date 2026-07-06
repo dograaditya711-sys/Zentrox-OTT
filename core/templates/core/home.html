@@ -1,0 +1,325 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>zentrox.in - Home</title>-->
+<!--    <script src="https://cdn.tailwindcss.com"></script>-->
+<!--    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">-->
+<!--    <style>-->
+<!--        body { font-family: 'Inter', sans-serif; }-->
+<!--        html { scroll-behavior: smooth; }-->
+<!--        .no-scrollbar::-webkit-scrollbar { display: none; }-->
+<!--        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }-->
+
+<!--        /* Navbar transparent to dark transition effect */-->
+<!--        .nav-gradient {-->
+<!--            background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body class="bg-[#0b0c10] text-white antialiased overflow-x-hidden">-->
+
+<!--    <nav class="fixed top-0 w-full z-[100] py-4 px-6 md:px-12 flex justify-between items-center nav-gradient transition-all duration-300" id="main-nav">-->
+<!--        <a href="{% url 'home' %}" class="flex items-center space-x-1">-->
+<!--            <h1 class="text-2xl md:text-3xl font-extrabold tracking-tighter shadow-sm">-->
+<!--                <span class="text-red-600 italic">zentrox</span><span class="text-white">.in</span>-->
+<!--            </h1>-->
+<!--        </a>-->
+
+<!--      <div class="flex items-center space-x-3 md:space-x-8">-->
+<!--    <div class="hidden lg:flex items-center space-x-6 text-sm font-semibold uppercase tracking-widest text-gray-300">-->
+<!--        <a href="{% url 'home' %}" class="hover:text-red-500 transition pb-1 {% if not is_tv %}border-b-2 border-red-600{% endif %}">Home</a>-->
+
+<!--        <a href="{% url 'home' %}" class="hover:text-red-500 transition pb-1">Movies</a>-->
+
+<!--        <a href="{% url 'tv_home' %}" class="hover:text-red-500 transition pb-1 {% if is_tv %}border-b-2 border-red-600{% endif %}">Series</a>-->
+
+<!--        <a href="#" class="hover:text-red-500 transition pb-1">Anime</a>-->
+<!--    </div>-->
+
+<!--            <form action="{% url 'search' %}" method="GET" class="relative group">-->
+<!--                <input type="text" name="q" placeholder="Search..."-->
+<!--                    class="bg-black/40 border border-gray-700 text-white text-xs rounded-full px-4 py-2 w-32 md:w-56 focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all placeholder-gray-500">-->
+<!--                <button type="submit" class="absolute right-3 top-2 text-gray-500 group-hover:text-white transition">-->
+<!--                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">-->
+<!--                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />-->
+<!--                    </svg>-->
+<!--                </button>-->
+<!--            </form>-->
+
+<!--            <button class="bg-red-600 hover:bg-red-700 text-white text-xs md:text-sm font-bold px-5 py-2 rounded-md transition transform hover:scale-105 active:scale-95 shadow-lg shadow-red-600/20">-->
+<!--                LOGIN-->
+<!--            </button>-->
+
+<!--            <div class="lg:hidden text-white cursor-pointer">-->
+<!--                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">-->
+<!--                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />-->
+<!--                </svg>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </nav>-->
+
+<!--    {% if featured_movie %}-->
+<!--    <div class="relative w-full h-[75vh] md:h-[90vh]">-->
+<!--        <img src="{{ image_base_url }}original{{ featured_movie.backdrop_path }}" alt="{{ featured_movie.title }}" class="absolute inset-0 w-full h-full object-cover shadow-2xl">-->
+<!--        <div class="absolute inset-0 bg-gradient-to-t from-[#0b0c10] via-transparent to-black/30"></div>-->
+<!--        <div class="absolute inset-0 bg-gradient-to-r from-[#0b0c10] via-transparent to-transparent"></div>-->
+
+<!--        <div class="absolute bottom-1/4 left-6 md:left-16 max-w-3xl z-10">-->
+<!--            <div class="flex items-center space-x-2 mb-4">-->
+<!--                <span class="bg-red-600 text-[10px] font-bold px-2 py-0.5 rounded italic">NEW</span>-->
+<!--                <span class="text-yellow-400 font-bold text-sm">⭐ {{ featured_movie.vote_average|floatformat:1 }}</span>-->
+<!--            </div>-->
+<!--            <h1 class="text-5xl md:text-8xl font-black mb-6 leading-none drop-shadow-2xl uppercase italic tracking-tighter">{{ featured_movie.title }}</h1>-->
+<!--            <p class="text-gray-300 mb-8 line-clamp-3 text-lg md:text-xl font-medium max-w-xl">{{ featured_movie.overview }}</p>-->
+<!--            <div class="flex items-center space-x-4">-->
+<!--                <a href="{% url 'movie_detail' featured_movie.id %}" class="bg-red-600 hover:bg-red-700 text-white font-black py-4 px-10 rounded-sm flex items-center transition transform hover:translate-y-[-2px] shadow-xl">-->
+<!--                    WATCH NOW-->
+<!--                </a>-->
+<!--                <a href="{% url 'movie_detail' featured_movie.id %}" class="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white font-bold py-4 px-10 rounded-sm transition border border-white/20">-->
+<!--                    DETAILS-->
+<!--                </a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    {% endif %}-->
+
+<!--    <div class="relative z-30 px-6 md:px-16 mt-[-30px]">-->
+<!--      <div class="flex overflow-x-auto space-x-3 no-scrollbar pb-4">-->
+<!--    <a href="{% url 'home' %}" class="{% if not current_genre %}bg-red-600{% else %}bg-[#1f2128]{% endif %} text-white px-6 py-2 rounded-full text-xs font-bold whitespace-nowrap">ALL</a>-->
+
+<!--    <a href="?genre=28" class="{% if current_genre == '28' %}bg-red-600{% else %}bg-[#1f2128]{% endif %} px-6 py-2 rounded-full text-xs font-bold whitespace-nowrap transition">ACTION</a>-->
+<!--    <a href="?genre=35" class="{% if current_genre == '35' %}bg-red-600{% else %}bg-[#1f2128]{% endif %} px-6 py-2 rounded-full text-xs font-bold whitespace-nowrap transition">COMEDY</a>-->
+<!--    <a href="?genre=27" class="{% if current_genre == '27' %}bg-red-600{% else %}bg-[#1f2128]{% endif %} px-6 py-2 rounded-full text-xs font-bold whitespace-nowrap transition">HORROR</a>-->
+<!--    <a href="?genre=878" class="{% if current_genre == '878' %}bg-red-600{% else %}bg-[#1f2128]{% endif %} px-6 py-2 rounded-full text-xs font-bold whitespace-nowrap transition">SCI-FI</a>-->
+<!--</div>-->
+<!--    </div>-->
+
+<!--    <main class="px-6 md:px-16 relative z-20 pb-20 mt-8">-->
+<!--        <div class="flex items-center justify-between mb-8">-->
+<!--            <div class="flex items-center space-x-3">-->
+<!--                <div class="w-1.5 h-8 bg-red-600"></div>-->
+<!--                <h2 class="text-2xl font-black uppercase tracking-widest italic">Latest Movies</h2>-->
+<!--            </div>-->
+<!--            <a href="#" class="text-red-500 text-sm font-bold hover:underline">VIEW ALL</a>-->
+<!--        </div>-->
+
+<!--        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-5 md:gap-8">-->
+<!--            {% for movie in movies %}-->
+<!--                {% include "core/movie_card.html" %}-->
+<!--            {% endfor %}-->
+<!--        </div>-->
+<!--        <div class="flex justify-center items-center space-x-6 pb-20 mt-12">-->
+<!--        {% if prev_page %}-->
+<!--            <a href="?page={{ prev_page }}&genre={{ current_genre }}"-->
+<!--               class="bg-[#1f2128] hover:bg-red-600 text-white px-8 py-3 rounded-md font-black transition-all transform hover:scale-105 active:scale-95 shadow-lg border border-gray-700">-->
+<!--               ← PREVIOUS-->
+<!--            </a>-->
+<!--        {% else %}-->
+<!--            <div class="w-32"></div>-->
+<!--        {% endif %}-->
+
+<!--        <div class="flex flex-col items-center">-->
+<!--            <span class="text-gray-500 text-[10px] font-bold uppercase tracking-widest">Current</span>-->
+<!--            <span class="text-white text-xl font-black italic">PAGE {{ current_page }}</span>-->
+<!--        </div>-->
+
+<!--        <a href="?page={{ next_page }}&genre={{ current_genre }}"-->
+<!--           class="bg-[#1f2128] hover:bg-red-600 text-white px-8 py-3 rounded-md font-black transition-all transform hover:scale-105 active:scale-95 shadow-lg border border-gray-700">-->
+<!--           NEXT →-->
+<!--        </a>-->
+<!--    </div>-->
+<!--    </main>-->
+
+<!--    <script>-->
+<!--        // Navbar background change on scroll-->
+<!--        window.addEventListener('scroll', function() {-->
+<!--            const nav = document.getElementById('main-nav');-->
+<!--            if (window.scrollY > 50) {-->
+<!--                nav.classList.add('bg-black');-->
+<!--                nav.classList.remove('nav-gradient');-->
+<!--            } else {-->
+<!--                nav.classList.remove('bg-black');-->
+<!--                nav.classList.add('nav-gradient');-->
+<!--            }-->
+<!--        });-->
+<!--    </script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>zentrox.in - {% if is_tv %}Series{% else %}Home{% endif %}</title>
+       <link rel="manifest" href="{% static 'manifest.json' %}">
+<meta name="theme-color" content="#e50914">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        html { scroll-behavior: smooth; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Navbar transparent to dark transition effect */
+        .nav-gradient {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+        }
+    </style>
+</head>
+<body class="bg-[#0b0c10] text-white antialiased overflow-x-hidden">
+
+    <nav class="fixed top-0 w-full z-[100] py-4 px-6 md:px-12 flex justify-between items-center nav-gradient transition-all duration-300" id="main-nav">
+        <a href="{% url 'home' %}" class="flex items-center space-x-1">
+            <h1 class="text-2xl md:text-3xl font-extrabold tracking-tighter shadow-sm">
+                <span class="text-red-600 italic">zentrox</span><span class="text-white">.in</span>
+            </h1>
+        </a>
+
+        <div class="flex items-center space-x-3 md:space-x-8">
+            <div class="hidden lg:flex items-center space-x-6 text-sm font-semibold uppercase tracking-widest text-gray-300">
+                <a href="{% url 'home' %}" class="hover:text-red-500 transition pb-1 {% if not is_tv %}border-b-2 border-red-600{% endif %}">Home</a>
+                <a href="{% url 'home' %}" class="hover:text-red-500 transition pb-1">Movies</a>
+                <a href="{% url 'tv_home' %}" class="hover:text-red-500 transition pb-1 {% if is_tv %}border-b-2 border-red-600{% endif %}">Series</a>
+               <a href="{% url 'anime_home' %}" class="hover:text-red-500 transition pb-1">Anime</a>
+            </div>
+
+            <form action="{% url 'search' %}" method="GET" class="relative group">
+                <input type="text" name="q" placeholder="Search..."
+                    class="bg-black/40 border border-gray-700 text-white text-xs rounded-full px-4 py-2 w-32 md:w-56 focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all placeholder-gray-500">
+                <button type="submit" class="absolute right-3 top-2 text-gray-500 group-hover:text-white transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </button>
+            </form>
+
+            <div class="flex items-center space-x-4">
+                {% if user.is_authenticated %}
+                    <span class="hidden md:block text-xs font-bold text-gray-300">Hi, {{ user.username }}</span>
+                <a href="{% url 'profile' %}" class="hidden md:block text-xs font-bold text-gray-300 hover:text-red-500 transition">
+            MY PROFILE
+        </a>
+                    <form action="{% url 'logout' %}" method="POST" class="m-0 p-0">
+                        {% csrf_token %}
+                        <button type="submit" class="bg-gray-800 hover:bg-gray-700 border border-gray-600 text-white text-xs md:text-sm font-bold px-5 py-2 rounded-md transition transform hover:scale-105 active:scale-95 shadow-lg">
+                            LOGOUT
+                        </button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'login' %}" class="bg-red-600 hover:bg-red-700 text-white text-xs md:text-sm font-bold px-5 py-2 rounded-md transition transform hover:scale-105 active:scale-95 shadow-lg shadow-red-600/20">
+                        LOGIN
+                    </a>
+                {% endif %}
+            </div>
+            <div class="lg:hidden text-white cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </div>
+        </div>
+    </nav>
+
+    {% if featured_movie %}
+    <div class="relative w-full h-[75vh] md:h-[90vh]">
+        <img src="{{ image_base_url }}original{{ featured_movie.backdrop_path }}" alt="{{ featured_movie.display_title }}" class="absolute inset-0 w-full h-full object-cover shadow-2xl">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#0b0c10] via-transparent to-black/30"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-[#0b0c10] via-transparent to-transparent"></div>
+
+        <div class="absolute bottom-1/4 left-6 md:left-16 max-w-3xl z-10">
+            <div class="flex items-center space-x-2 mb-4">
+                <span class="bg-red-600 text-[10px] font-bold px-2 py-0.5 rounded italic">NEW</span>
+                <span class="text-yellow-400 font-bold text-sm">⭐ {{ featured_movie.vote_average|floatformat:1 }}</span>
+            </div>
+            <h1 class="text-5xl md:text-8xl font-black mb-6 leading-none drop-shadow-2xl uppercase italic tracking-tighter">{{ featured_movie.display_title }}</h1>
+            <p class="text-gray-300 mb-8 line-clamp-3 text-lg md:text-xl font-medium max-w-xl">{{ featured_movie.overview }}</p>
+            <div class="flex items-center space-x-4">
+                <a href="{% if is_tv %}{% url 'tv_detail' featured_movie.id %}{% else %}{% url 'movie_detail' featured_movie.id %}{% endif %}" class="bg-red-600 hover:bg-red-700 text-white font-black py-4 px-10 rounded-sm flex items-center transition transform hover:translate-y-[-2px] shadow-xl">
+                    WATCH NOW
+                </a>
+                <a href="{% if is_tv %}{% url 'tv_detail' featured_movie.id %}{% else %}{% url 'movie_detail' featured_movie.id %}{% endif %}" class="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white font-bold py-4 px-10 rounded-sm transition border border-white/20">
+                    DETAILS
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="relative z-30 px-6 md:px-16 mt-[-30px]">
+        <div class="flex overflow-x-auto space-x-3 no-scrollbar pb-4">
+            <a href="{% if is_tv %}{% url 'tv_home' %}{% else %}{% url 'home' %}{% endif %}" class="{% if not current_genre %}bg-red-600{% else %}bg-[#1f2128]{% endif %} text-white px-6 py-2 rounded-full text-xs font-bold whitespace-nowrap">ALL</a>
+            <a href="?genre=28" class="{% if current_genre == '28' %}bg-red-600{% else %}bg-[#1f2128]{% endif %} px-6 py-2 rounded-full text-xs font-bold whitespace-nowrap transition">ACTION</a>
+            <a href="?genre=35" class="{% if current_genre == '35' %}bg-red-600{% else %}bg-[#1f2128]{% endif %} px-6 py-2 rounded-full text-xs font-bold whitespace-nowrap transition">COMEDY</a>
+            <a href="?genre=27" class="{% if current_genre == '27' %}bg-red-600{% else %}bg-[#1f2128]{% endif %} px-6 py-2 rounded-full text-xs font-bold whitespace-nowrap transition">HORROR</a>
+            <a href="?genre=878" class="{% if current_genre == '878' %}bg-red-600{% else %}bg-[#1f2128]{% endif %} px-6 py-2 rounded-full text-xs font-bold whitespace-nowrap transition">SCI-FI</a>
+        </div>
+    </div>
+
+    <main class="px-6 md:px-16 relative z-20 pb-20 mt-8">
+        <div class="flex items-center justify-between mb-8">
+            <div class="flex items-center space-x-3">
+                <div class="w-1.5 h-8 bg-red-600"></div>
+                <h2 class="text-2xl font-black uppercase tracking-widest italic">{% if is_tv %}Latest Series{% else %}Latest Movies{% endif %}</h2>
+            </div>
+            <a href="#" class="text-red-500 text-sm font-bold hover:underline">VIEW ALL</a>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-5 md:gap-8">
+            {% for movie in movies %}
+                {% include "core/movie_card.html" %}
+            {% endfor %}
+        </div>
+
+        <div class="flex justify-center items-center space-x-6 pb-20 mt-12">
+            {% if prev_page %}
+                <a href="?page={{ prev_page }}&genre={{ current_genre }}"
+                   class="bg-[#1f2128] hover:bg-red-600 text-white px-8 py-3 rounded-md font-black transition-all transform hover:scale-105 active:scale-95 shadow-lg border border-gray-700">
+                   ← PREVIOUS
+                </a>
+            {% else %}
+                <div class="w-32"></div>
+            {% endif %}
+
+            <div class="flex flex-col items-center">
+                <span class="text-gray-500 text-[10px] font-bold uppercase tracking-widest">Current</span>
+                <span class="text-white text-xl font-black italic">PAGE {{ current_page }}</span>
+            </div>
+
+            <a href="?page={{ next_page }}&genre={{ current_genre }}"
+               class="bg-[#1f2128] hover:bg-red-600 text-white px-8 py-3 rounded-md font-black transition-all transform hover:scale-105 active:scale-95 shadow-lg border border-gray-700">
+               NEXT →
+            </a>
+        </div>
+    </main>
+
+    <script>
+        // Navbar background change on scroll
+        window.addEventListener('scroll', function() {
+            const nav = document.getElementById('main-nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('bg-black');
+                nav.classList.remove('nav-gradient');
+            } else {
+                nav.classList.remove('bg-black');
+                nav.classList.add('nav-gradient');
+            }
+        });
+    </script>
+<script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('{% static "sw.js" %}')
+            .then(() => console.log("Zentrox App Engine Started!"))
+            .catch((err) => console.log("Service Worker Error: ", err));
+        }
+    </script>
+</body>
+</html>

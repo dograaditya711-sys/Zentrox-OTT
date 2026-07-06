@@ -1,0 +1,25 @@
+databases:
+  - name: zentrox-db
+    databaseName: zentrox
+    user: zentrox_user
+    plan: free
+
+services:
+  - type: web
+    name: zentrox-web
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn movie_project.wsgi:application"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: zentrox-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: ".onrender.com"
+      - key: TMDB_API_KEY
+        value: "834154bd6f599e5df133bc2710a91054"

@@ -1,0 +1,299 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>{{ movie.name }} - zentrox Series</title>-->
+<!--    <script src="https://cdn.tailwindcss.com"></script>-->
+<!--    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">-->
+<!--    <style>-->
+<!--        body { font-family: 'Inter', sans-serif; }-->
+<!--        .no-scrollbar::-webkit-scrollbar { display: none; }-->
+<!--        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body class="bg-[#0b0c10] text-white antialiased overflow-x-hidden">-->
+
+<!--    <nav class="absolute top-0 w-full z-[100] py-4 px-6 md:px-12 flex justify-between items-center bg-gradient-to-b from-black/80 to-transparent">-->
+<!--        <a href="{% url 'home' %}">-->
+<!--            <h1 class="text-2xl md:text-3xl font-extrabold tracking-tighter"><span class="text-red-600 italic">zentrox</span>.in</h1>-->
+<!--        </a>-->
+<!--        <a href="{% url 'tv_home' %}" class="bg-gray-800/80 hover:bg-gray-700 backdrop-blur-md px-4 py-1.5 rounded text-sm font-bold transition border border-gray-600">← ALL SERIES</a>-->
+<!--    </nav>-->
+
+<!--    <div class="relative w-full h-[75vh] md:h-[90vh] bg-[#0b0c10] flex items-center">-->
+<!--        <div class="absolute inset-0 w-full h-full">-->
+<!--            <img src="{{ image_base_url }}original{{ movie.backdrop_path }}" class="w-full h-full object-cover opacity-40">-->
+<!--        </div>-->
+
+<!--        <div class="absolute inset-0 bg-gradient-to-r from-[#0b0c10] via-[#0b0c10]/90 to-transparent"></div>-->
+<!--        <div class="absolute inset-0 bg-gradient-to-t from-[#0b0c10] via-transparent to-transparent"></div>-->
+
+<!--        <div class="relative z-10 px-6 md:px-16 max-w-3xl mt-16 md:mt-0">-->
+<!--            <span class="text-red-600 font-bold tracking-widest uppercase text-sm mb-2 block">NET22 ORIGINAL SERIES</span>-->
+<!--            <h1 class="text-5xl md:text-7xl font-black uppercase tracking-tighter mb-4 text-white drop-shadow-2xl">-->
+<!--                {{ movie.name }}-->
+<!--            </h1>-->
+
+<!--            <div class="flex flex-wrap items-center gap-4 mb-6">-->
+<!--                <span class="text-green-500 font-bold text-lg drop-shadow-md">{{ movie.number_of_seasons }} Seasons</span>-->
+<!--                <span class="text-gray-300 font-bold">{{ movie.first_air_date|slice:":4" }}</span>-->
+<!--                <span class="bg-red-600 text-white px-2 py-0.5 rounded text-xs font-bold border border-red-600">4K HDR</span>-->
+<!--            </div>-->
+
+<!--            <p class="text-gray-200 text-lg md:text-xl line-clamp-3 mb-8 drop-shadow-lg font-medium max-w-2xl">-->
+<!--                {{ movie.overview }}-->
+<!--            </p>-->
+
+<!--            <div class="bg-[#1f2128]/80 backdrop-blur-md border border-gray-700 p-4 rounded-lg inline-block mb-6">-->
+<!--                <p class="text-xs text-gray-400 font-bold uppercase mb-2">Select Episode to Play</p>-->
+<!--                <div class="flex items-center space-x-3">-->
+<!--                    <div class="flex flex-col">-->
+<!--                        <label class="text-[10px] text-gray-500 font-bold mb-1">SEASON</label>-->
+<!--                        <input type="number" id="seasonNum" value="1" min="1" class="bg-black border border-gray-600 text-white w-16 px-2 py-1 rounded text-center focus:border-red-600 outline-none">-->
+<!--                    </div>-->
+<!--                    <div class="flex flex-col">-->
+<!--                        <label class="text-[10px] text-gray-500 font-bold mb-1">EPISODE</label>-->
+<!--                        <input type="number" id="episodeNum" value="1" min="1" class="bg-black border border-gray-600 text-white w-16 px-2 py-1 rounded text-center focus:border-red-600 outline-none">-->
+<!--                    </div>-->
+
+<!--                    <button onclick="playEpisode()" class="mt-4 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded transition flex items-center shadow-lg">-->
+<!--                        ▶ PLAY EPISODE-->
+<!--                    </button>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <br>-->
+<!--            {% if trailer_key %}-->
+<!--            <button onclick="openTrailer()" class="bg-gray-800/80 hover:bg-gray-700 text-white border border-gray-500 text-sm font-bold py-2 px-6 rounded-md inline-flex items-center transition backdrop-blur-md">-->
+<!--                📺 Watch Trailer-->
+<!--            </button>-->
+<!--            {% endif %}-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="mt-4">-->
+<!--    {% if user.is_authenticated %}-->
+<!--        {% if in_watchlist %}-->
+<!--            <form action="{% url 'remove_watchlist' %}" method="POST">-->
+<!--                {% csrf_token %}-->
+<!--                <input type="hidden" name="tmdb_id" value="{{ movie.id }}">-->
+<!--                <input type="hidden" name="media_type" value="tv">-->
+<!--                <button type="submit" class="bg-gray-800/80 hover:bg-gray-700 text-white border border-gray-500 text-sm font-bold py-2 px-6 rounded-md inline-flex items-center transition backdrop-blur-md">-->
+<!--                    <svg class="w-4 h-4 mr-2 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 000 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path></svg>-->
+<!--                    Remove from Watchlist-->
+<!--                </button>-->
+<!--            </form>-->
+<!--        {% else %}-->
+<!--            <form action="{% url 'add_watchlist' %}" method="POST">-->
+<!--                {% csrf_token %}-->
+<!--                <input type="hidden" name="tmdb_id" value="{{ movie.id }}">-->
+<!--                <input type="hidden" name="media_type" value="tv">-->
+<!--                <input type="hidden" name="title" value="{{ movie.name }}">-->
+<!--                <input type="hidden" name="poster_path" value="{{ movie.poster_path }}">-->
+<!--                <button type="submit" class="bg-white/10 hover:bg-white/20 text-white border border-white/20 text-sm font-bold py-2 px-6 rounded-md inline-flex items-center transition backdrop-blur-md">-->
+<!--                    <svg class="w-4 h-4 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>-->
+<!--                    Add to Watchlist-->
+<!--                </button>-->
+<!--            </form>-->
+<!--        {% endif %}-->
+<!--    {% endif %}-->
+<!--    </div>-->
+
+<!--    <div class="px-6 md:px-16 mt-10 pb-20 relative z-20">-->
+<!--        <h2 class="text-xl font-black uppercase italic border-l-4 border-red-600 pl-3 mb-6">More Series Like This</h2>-->
+<!--        <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">-->
+<!--            {% for rec in recommended_movies %}-->
+<!--            <a href="{% url 'tv_detail' rec.id %}" class="group">-->
+<!--                <div class="rounded overflow-hidden border border-gray-800 group-hover:border-red-600 transition">-->
+<!--                    <img src="{{ image_base_url }}w342{{ rec.poster_path }}" class="w-full aspect-[2/3] object-cover">-->
+<!--                </div>-->
+<!--                <p class="text-[10px] font-bold mt-2 truncate text-gray-300">{{ rec.name }}</p>-->
+<!--            </a>-->
+<!--            {% endfor %}-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div id="trailerModal" class="fixed inset-0 z-[200] hidden bg-black/90 flex items-center justify-center p-4 backdrop-blur-sm">-->
+<!--        <div class="relative w-full max-w-5xl aspect-video bg-black rounded-lg shadow-2xl border border-gray-800">-->
+<!--            <button onclick="closeTrailer()" class="absolute -top-12 right-0 text-white hover:text-red-500 font-bold text-lg md:text-xl transition">✖ CLOSE</button>-->
+<!--            <div id="trailerContainer" class="w-full h-full rounded-lg overflow-hidden"></div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <script>-->
+<!--        function playEpisode() {-->
+<!--            // Get selected season and episode-->
+<!--            const s = document.getElementById('seasonNum').value;-->
+<!--            const e = document.getElementById('episodeNum').value;-->
+<!--            const tmdbId = "{{ movie.id }}";-->
+
+<!--            // Build the Vidsrc TV URL (Format: /embed/tv/ID/Season/Episode)-->
+<!--            const playUrl = `https://vidsrc.to/embed/tv/${tmdbId}/${s}/${e}`;-->
+
+<!--            // Open in new tab-->
+<!--            window.open(playUrl, '_blank');-->
+<!--        }-->
+
+<!--        function openTrailer() {-->
+<!--            const modal = document.getElementById('trailerModal');-->
+<!--            const container = document.getElementById('trailerContainer');-->
+<!--            modal.classList.remove('hidden');-->
+<!--            container.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/{{ trailer_key }}?autoplay=1&controls=1&rel=0&playsinline=1&modestbranding=1" class="w-full h-full" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;-->
+<!--        }-->
+
+<!--        function closeTrailer() {-->
+<!--            document.getElementById('trailerModal').classList.add('hidden');-->
+<!--            document.getElementById('trailerContainer').innerHTML = '';-->
+<!--        }-->
+<!--    </script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ movie.name }} - zentrox Series</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-[#0b0c10] text-white antialiased overflow-x-hidden">
+
+    <nav class="absolute top-0 w-full z-[100] py-4 px-6 md:px-12 flex justify-between items-center bg-gradient-to-b from-black/80 to-transparent">
+        <a href="{% url 'home' %}">
+            <h1 class="text-2xl md:text-3xl font-extrabold tracking-tighter"><span class="text-red-600 italic">zentrox</span>.in</h1>
+        </a>
+        <a href="{% url 'tv_home' %}" class="bg-gray-800/80 hover:bg-gray-700 backdrop-blur-md px-4 py-1.5 rounded text-sm font-bold transition border border-gray-600">← ALL SERIES</a>
+    </nav>
+
+    <div class="relative w-full h-[75vh] md:h-[90vh] bg-[#0b0c10] flex items-center">
+        <div class="absolute inset-0 w-full h-full">
+            <img src="{{ image_base_url }}original{{ movie.backdrop_path }}" class="w-full h-full object-cover opacity-40">
+        </div>
+
+        <div class="absolute inset-0 bg-gradient-to-r from-[#0b0c10] via-[#0b0c10]/90 to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-[#0b0c10] via-transparent to-transparent"></div>
+
+        <div class="relative z-10 px-6 md:px-16 max-w-3xl mt-16 md:mt-0">
+            <span class="text-red-600 font-bold tracking-widest uppercase text-sm mb-2 block">NET22 ORIGINAL SERIES</span>
+            <h1 class="text-5xl md:text-7xl font-black uppercase tracking-tighter mb-4 text-white drop-shadow-2xl">
+                {{ movie.name }}
+            </h1>
+
+            <div class="flex flex-wrap items-center gap-4 mb-6">
+                <span class="text-green-500 font-bold text-lg drop-shadow-md">{{ movie.number_of_seasons }} Seasons</span>
+                <span class="text-gray-300 font-bold">{{ movie.first_air_date|slice:":4" }}</span>
+                <span class="bg-red-600 text-white px-2 py-0.5 rounded text-xs font-bold border border-red-600">4K HDR</span>
+            </div>
+
+            <p class="text-gray-200 text-lg md:text-xl line-clamp-3 mb-8 drop-shadow-lg font-medium max-w-2xl">
+                {{ movie.overview }}
+            </p>
+
+            <div class="bg-[#1f2128]/80 backdrop-blur-md border border-gray-700 p-4 rounded-lg inline-block mb-6">
+                <p class="text-xs text-gray-400 font-bold uppercase mb-2">Select Episode to Play</p>
+                <div class="flex items-center space-x-3">
+                    <div class="flex flex-col">
+                        <label class="text-[10px] text-gray-500 font-bold mb-1">SEASON</label>
+                        <input type="number" id="seasonNum" value="1" min="1" class="bg-black border border-gray-600 text-white w-16 px-2 py-1 rounded text-center focus:border-red-600 outline-none">
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="text-[10px] text-gray-500 font-bold mb-1">EPISODE</label>
+                        <input type="number" id="episodeNum" value="1" min="1" class="bg-black border border-gray-600 text-white w-16 px-2 py-1 rounded text-center focus:border-red-600 outline-none">
+                    </div>
+
+                    <button onclick="playEpisode()" class="mt-4 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded transition flex items-center shadow-lg">
+                        ▶ PLAY EPISODE
+                    </button>
+                </div>
+            </div>
+
+            <br>
+            <div class="flex flex-wrap items-center gap-4">
+                {% if trailer_key %}
+                <button onclick="openTrailer()" class="bg-gray-800/80 hover:bg-gray-700 text-white border border-gray-500 text-sm font-bold py-2 px-6 rounded-md inline-flex items-center transition backdrop-blur-md">
+                    📺 Watch Trailer
+                </button>
+                {% endif %}
+
+                {% if user.is_authenticated %}
+                    {% if in_watchlist %}
+                        <form action="{% url 'remove_watchlist' %}" method="POST" class="m-0">
+                            {% csrf_token %}
+                            <input type="hidden" name="tmdb_id" value="{{ movie.id }}">
+                            <input type="hidden" name="media_type" value="tv">
+                            <button type="submit" class="bg-red-600/20 hover:bg-red-600 text-white border border-red-600/50 text-sm font-bold py-2 px-6 rounded-md inline-flex items-center transition backdrop-blur-md">
+                                <svg class="w-4 h-4 mr-2 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 000 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path></svg>
+                                Saved
+                            </button>
+                        </form>
+                    {% else %}
+                        <form action="{% url 'add_watchlist' %}" method="POST" class="m-0">
+                            {% csrf_token %}
+                            <input type="hidden" name="tmdb_id" value="{{ movie.id }}">
+                            <input type="hidden" name="media_type" value="tv">
+                            <input type="hidden" name="title" value="{{ movie.name }}">
+                            <input type="hidden" name="poster_path" value="{{ movie.poster_path }}">
+                            <button type="submit" class="bg-white/10 hover:bg-white/20 text-white border border-white/20 text-sm font-bold py-2 px-6 rounded-md inline-flex items-center transition backdrop-blur-md">
+                                <svg class="w-4 h-4 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                                Add to Watchlist
+                            </button>
+                        </form>
+                    {% endif %}
+                {% endif %}
+                </div>
+        </div>
+    </div>
+
+    <div class="px-6 md:px-16 mt-10 pb-20 relative z-20">
+        <h2 class="text-xl font-black uppercase italic border-l-4 border-red-600 pl-3 mb-6">More Series Like This</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
+            {% for rec in recommended_movies %}
+            <a href="{% url 'tv_detail' rec.id %}" class="group">
+                <div class="rounded overflow-hidden border border-gray-800 group-hover:border-red-600 transition">
+                    <img src="{{ image_base_url }}w342{{ rec.poster_path }}" class="w-full aspect-[2/3] object-cover">
+                </div>
+                <p class="text-[10px] font-bold mt-2 truncate text-gray-300">{{ rec.name }}</p>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div id="trailerModal" class="fixed inset-0 z-[200] hidden bg-black/90 flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="relative w-full max-w-5xl aspect-video bg-black rounded-lg shadow-2xl border border-gray-800">
+            <button onclick="closeTrailer()" class="absolute -top-12 right-0 text-white hover:text-red-500 font-bold text-lg md:text-xl transition">✖ CLOSE</button>
+            <div id="trailerContainer" class="w-full h-full rounded-lg overflow-hidden"></div>
+        </div>
+    </div>
+
+    <script>
+        function playEpisode() {
+            const s = document.getElementById('seasonNum').value;
+            const e = document.getElementById('episodeNum').value;
+            const tmdbId = "{{ movie.id }}";
+            const playUrl = `https://vidsrc.to/embed/tv/${tmdbId}/${s}/${e}`;
+            window.open(playUrl, '_blank');
+        }
+
+        function openTrailer() {
+            const modal = document.getElementById('trailerModal');
+            const container = document.getElementById('trailerContainer');
+            modal.classList.remove('hidden');
+            container.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/{{ trailer_key }}?autoplay=1&controls=1&rel=0&playsinline=1&modestbranding=1" class="w-full h-full" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+        }
+
+        function closeTrailer() {
+            document.getElementById('trailerModal').classList.add('hidden');
+            document.getElementById('trailerContainer').innerHTML = '';
+        }
+    </script>
+</body>
+</html>
