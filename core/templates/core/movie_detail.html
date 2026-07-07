@@ -90,14 +90,28 @@
                 {{ movie.overview }}
             </p>
 
+<!--            <div class="flex flex-wrap items-center gap-4">-->
+<!--                <a href="https://vidsrc.to/embed/movie/{{ movie.id }}" target="_blank"-->
+<!--                   class="bg-white hover:bg-gray-200 text-black text-xl font-bold py-3 px-8 rounded-md flex items-center transition transform hover:scale-105 shadow-xl">-->
+<!--                    <svg class="w-8 h-8 mr-2" fill="currentColor" viewBox="0 0 20 20">-->
+<!--                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>-->
+<!--                    </svg>-->
+<!--                    Play-->
+<!--                </a>-->
             <div class="flex flex-wrap items-center gap-4">
-                <a href="https://vidsrc.to/embed/movie/{{ movie.id }}" target="_blank"
-                   class="bg-white hover:bg-gray-200 text-black text-xl font-bold py-3 px-8 rounded-md flex items-center transition transform hover:scale-105 shadow-xl">
-                    <svg class="w-8 h-8 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
-                    </svg>
-                    Play
-                </a>
+
+<button onclick="playMovie()"
+class="bg-white hover:bg-gray-200 text-black text-xl font-bold py-3 px-8 rounded-md flex items-center transition transform hover:scale-105 shadow-xl">
+
+    <svg class="w-8 h-8 mr-2" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd"
+        d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+        clip-rule="evenodd"></path>
+    </svg>
+
+    Play
+
+</button>
 
                 {% if trailer_key %}
                 <button onclick="openTrailer()"
@@ -275,6 +289,36 @@
             container.innerHTML = '';
         }
     </script>
+<script>
+function playMovie() {
+
+    document.body.insertAdjacentHTML("beforeend", `
+    <div id="playerModal"
+         style="position:fixed;top:0;left:0;width:100%;height:100%;background:black;z-index:9999;">
+
+        <button onclick="closePlayer()"
+        style="position:absolute;top:20px;right:20px;z-index:10000;
+        background:red;color:white;padding:10px 20px;border:none;cursor:pointer;">
+        ✕ Close
+        </button>
+
+        <iframe
+            src="https://vidsrc.to/embed/movie/{{ movie.id }}"
+            width="100%"
+            height="100%"
+            frameborder="0"
+            allowfullscreen>
+        </iframe>
+
+    </div>
+    `);
+
+}
+
+function closePlayer(){
+    document.getElementById("playerModal").remove();
+}
+</script>
 </body>
 </html>
 <!--    <div class="max-w-6xl mx-auto mt-10 px-4 flex flex-col md:flex-row gap-8">-->
