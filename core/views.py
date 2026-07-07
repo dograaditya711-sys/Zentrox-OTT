@@ -22,7 +22,7 @@
 #     # pk (Primary Key) se specific movie ko database se nikal rahe hain
 #     movie = get_object_or_404(Movie, pk=pk)
 #     return render(request, 'core/movie_detail.html', {'movie': movie})
-from idlelib.searchengine import search_reverse
+
 
 # import requests
 # from django.shortcuts import render

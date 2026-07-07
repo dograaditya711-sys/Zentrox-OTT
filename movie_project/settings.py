@@ -136,7 +136,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 TMDB_API_KEY = os.environ.get('TMDB_API_KEY', '834154bd6f599e5df133bc2710a91054')
-# TMDB_API_KEY = '834154bd6f599e5df133bc2710a91054'
+TMDB_API_KEY = '834154bd6f599e5df133bc2710a91054'
 TMDB_BASE_URL = 'https://api.tmdb.org/3'
 TMDB_IMAGE_URL = 'https://image.tmdb.org/t/p/'
 
